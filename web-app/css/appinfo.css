@@ -1,0 +1,103 @@
+body, input, select, textarea {
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+
+html * {
+	margin: 0;
+}
+
+body {
+	background: #eee;
+	color: #333333;
+	margin: 0 auto;
+	padding: 3;
+	overflow-x: hidden; /* prevents box-shadow causing a horizontal scrollbar in firefox when viewport < 960px wide */
+	   -moz-box-shadow: 0 0 0.3em #255b17;
+	-webkit-box-shadow: 0 0 0.3em #255b17;
+	        box-shadow: 0 0 0.3em #255b17;
+}
+
+/* replace with .no-boxshadow body if you have modernizr available */
+.ie6 body,
+.ie7 body,
+.ie8 body {
+	border-color: #255b17;
+	border-style: solid;
+	border-width: 0 1px;
+}
+
+.ie6 body {
+	height: 100%;
+}
+
+a:link, a:visited, a:hover {
+	color: #48802c;
+}
+
+a:hover, a:active {
+	outline: none; /* prevents outline in webkit on active links but retains it for tab focus */
+}
+
+ul {
+	padding: 10;
+}
+
+img {
+	border: 0;
+}
+
+.content h1 {
+	border-bottom: 1px solid #CCCCCC;
+	margin: 0.8em 1em 0.3em;
+	padding: 0 0.25em;
+}
+
+table {
+	border-top: 1px solid #DFDFDF;
+	border-collapse: collapse;
+	width: 100%;
+	margin-bottom: 1em;
+}
+
+tr {
+	border: 0;
+}
+
+thead th {
+	white-space: nowrap;
+}
+
+a {
+	outline: none;
+}
+
+.appinfo_warning {
+	color: red;
+	font-weight: bold;
+}
+
+#appinfo_log4j {
+	width: 100%;
+	height: 200px;
+}
+
+#accordion {
+	background: #eee;
+	width: 300px;
+}
+
+#accordion h2 {
+	background:#ccc url(gradient/h30.png);
+}
+
+#accordion .pane {
+	color: black;
+}
+
+ul.tabs a { 
+	font-size:12px;
+	font-weight:normal;
+	padding: 5px 20px;	
+	height: 16px;
+	top: 3px;	
+}
