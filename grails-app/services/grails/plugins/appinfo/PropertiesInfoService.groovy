@@ -33,7 +33,7 @@ class PropertiesInfoService {
 
 		BeanWrapper beanWrapper = PropertyAccessorFactory.forBeanPropertyAccess(realDataSource)
 		for (pd in beanWrapper.propertyDescriptors.sort { it.name }) {
-			if (!pd.readMethod || !pd.writeMethod) {
+			if (!pd.readMethod) {
 				continue
 			}
 
@@ -46,7 +46,7 @@ class PropertiesInfoService {
 				pd.readMethod.accessible = true
 				propertyInfo << [name: pd.name,
 									  value: pd.readMethod.invoke(realDataSource),
-									  set: pd.writeMethod.name,
+									  set: pd.writeMethod?.name,
 									  type: returnType.name]
 			}
 			catch (ignored) {}
@@ -91,7 +91,11 @@ class PropertiesInfoService {
 			}
 		}
 
-		if (realDataSource instanceof BasicDataSource) {
+		def closeDsAfterUpdate = grailsApplication.config.grails.plugins.appinfo.closeDsAfterUpdate
+		if (!(closeDsAfterUpdate instanceof Boolean)) {
+			closeDsAfterUpdate = true
+		}
+		if (closeDsAfterUpdate && (realDataSource instanceof BasicDataSource)) {
 			realDataSource.close()
 		}
 	}
