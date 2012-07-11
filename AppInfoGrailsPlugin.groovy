@@ -16,7 +16,7 @@ class AppInfoGrailsPlugin {
 
 	String license = 'APACHE'
 	def issueManagement = [system: 'JIRA', url: 'http://jira.grails.org/browse/GPAPPINFO']
-	def scm = [url: 'https://github.com/burtbeckwith/grails-dynamic-controller']
+	def scm = [url: 'https://github.com/burtbeckwith/grails-app-info']
 
 	def doWithWebDescriptor = { xml ->
 		def useContextListener = application.config.grails.plugins.appinfo.useContextListener
