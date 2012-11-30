@@ -20,7 +20,7 @@ class AppInfoTagLib {
 			out << g.javascript(library: 'jquery', plugin: 'jquery')
 			for (name in ['table', 'jquery.jdMenu', 'jquery.jdMenu.slate',
 			              'tabs', 'tabs-accordion', 'appinfo']) {
-				out << """<link rel="stylesheet" media="screen" href="${resource(dir:'css',file:'${name}.css',plugin:'appInfo')}"/>"""
+				out << """<link rel="stylesheet" media="screen" href="${resource(dir:'css',file:"${name}.css",plugin:'appInfo')}"/>"""
 			}
 			out << """<link rel='stylesheet' media="screen" href='${resource(dir:'css', file: 'main.css', plugin: 'none')}' />"""
 		}
