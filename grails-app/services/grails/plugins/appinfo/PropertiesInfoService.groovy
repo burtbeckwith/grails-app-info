@@ -1,6 +1,5 @@
 package grails.plugins.appinfo
 
-import org.apache.commons.dbcp.BasicDataSource
 import org.springframework.beans.BeanWrapper
 import org.springframework.beans.PropertyAccessorFactory
 import org.springframework.beans.SimpleTypeConverter
@@ -95,7 +94,12 @@ class PropertiesInfoService {
 		if (!(closeDsAfterUpdate instanceof Boolean)) {
 			closeDsAfterUpdate = true
 		}
-		if (closeDsAfterUpdate && (realDataSource instanceof BasicDataSource)) {
+
+		if (!closeDsAfterUpdate) {
+			return
+		}
+
+		if (realDataSource.getClass().name.equals('org.apache.commons.dbcp.BasicDataSource')) {
 			realDataSource.close()
 		}
 	}
