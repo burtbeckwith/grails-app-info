@@ -1,41 +1,48 @@
-import functionaltestplugin.FunctionalTestCase
-
 import java.util.regex.Pattern
 
-import com.gargoylesoftware.htmlunit.HttpMethod
-import com.gargoylesoftware.htmlunit.WebRequestSettings
+import javax.xml.parsers.DocumentBuilderFactory
+import javax.xml.xpath.XPathFactory
 
-import org.springframework.util.ReflectionUtils
+import functionaltestplugin.FunctionalTestCase
 
 abstract class AbstractAppInfoWebTest extends FunctionalTestCase {
-
-	protected static final String ROW_COUNT_XPATH = "count(//div[@class='list']//tbody/tr)"
-
 	protected String sessionId
 
 	@Override
 	protected void tearDown() {
 		super.tearDown()
-		get '/logout'
+		logout()
 	}
 
 	protected void verifyListSize(int size) {
-		assertContentContainsStrict 'List'
-		int actual = page.getByXPath(ROW_COUNT_XPATH)[0]
+		int actual = evaluateXpath("count(//div//table//tbody/tr)") as Integer
 		assertEquals "$size row(s) of data expected", size, actual
 	}
 
-	protected void verifyXPath(String xpath, String expected, boolean regex) {
-		def results = page.getByXPath(ROW_COUNT_XPATH)
-println "\n\n verifyXPath xpath: $xpath expected $expected : $results ${results*.getClass().name}\n\n"
-// verifyXPath xpath: //div[@class='message'] expected .*TestRole.*deleted.* : [0.0] [java.lang.Double]
+	protected void verifyXPath(String expression, String expected, boolean regex) {
+		String result = evaluateXpath(expression)
+		if (regex) {
+			assertTrue Pattern.compile(expected, Pattern.DOTALL).matcher(result).find()
+		}
+		else {
+			assertEquals expected, result
+		}
+	}
 
-//		if (regex) {
-//			assertTrue Pattern.compile(expected, Pattern.DOTALL).matcher(results[0]).find()
-//		}
-//		else {
-//			assertEquals expected, results[0]
-//		}
+	protected evaluateXpath(String expression) {
+		def documentElement = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new ByteArrayInputStream(convertResponseToXml().bytes)).documentElement
+		XPathFactory.newInstance().newXPath().evaluate(expression, documentElement)
+	}
+
+	protected String convertResponseToXml() {
+		StringBuilder fixed = new StringBuilder()
+		response.contentAsString.eachLine { String line ->
+			line = line.replaceAll('&hellip;', '').trim()
+			if (!line.startsWith('<link ') && !line.startsWith('<meta ')) {
+				fixed << line << '\n'
+			}
+		}
+		fixed.toString().replaceAll('<!doctype ', '<!DOCTYPE ')
 	}
 
 	protected void clickButton(String idOrText) {
@@ -59,65 +66,20 @@ println "\n\n verifyXPath xpath: $xpath expected $expected : $results ${results*
 		handleRedirects()
 	}
 
-	protected void getWithAuth(String url, String username, String password) {
-		println "\n\n${'>'*20} Making request to $url using method get ${'>'*20}"
+	protected void login(String username, String password) {
+		// login as user1
+		get '/login/auth'
+		assertContentContains 'Please Login'
 
-		def pageField = ReflectionUtils.findField(FunctionalTestCase, '_page')
-		pageField.accessible = true
-
-		def reqURL = makeRequestURL(pageField.get(this), url)
-
-		println "Initializing web request settings for $reqURL"
-		settings = new WebRequestSettings(reqURL)
-		settings.httpMethod = HttpMethod.GET
-		settings.additionalHeaders = ['Authorization': 'Basic ' + (username + ':' + password).bytes.encodeBase64()]
-
-		dumpRequestInfo(settings)
-
-		response = client.loadWebResponse(settings)
-		pageField.set this, client.loadWebResponseInto(response, mainWindow)
-
-		handleRedirects()
+		form {
+			j_username = username
+			j_password = password
+			_spring_security_remember_me = true
+			clickButton 'Login'
+		}
 	}
 
-	protected String getSessionValue(String name, String sessionId) {
-		def settings = new WebRequestSettings(makeRequestURL(page, '/hack/getSessionValue?name=' + name))
-		settings.httpMethod = HttpMethod.GET
-		settings.additionalHeaders = ['Cookie': 'JSESSIONID=' + sessionId]
-		def response = client.loadWebResponse(settings)
-		return stripWS(response.contentAsString)
-	}
-
-	protected getInNewPage(String url, String sessionId = null) {
-		def settings = new WebRequestSettings(makeRequestURL(page, url))
-		settings.httpMethod = HttpMethod.GET
-		if (sessionId) {
-			settings.additionalHeaders = ['Cookie': 'JSESSIONID=' + sessionId]
-		}
-		dumpRequestInfo(settings)
-		return client.loadWebResponse(settings)
-	}
-
-	protected String getContent(String url, boolean newPage = false) {
-		def res
-		if (newPage) {
-			res = getInNewPage(url)
-		}
-		else {
-			get url
-			res = response
-		}
-		stripWS res.contentAsString
-	}
-
-	def get(url, Closure paramSetup = null) {
-		super.get(url, paramSetup)
-		def cookie = response.responseHeaders.find { it.name == 'Set-Cookie' }
-		if (!cookie) {
-			return
-		}
-		def parts = cookie.value.split(';Path=/')
-		sessionId = parts[0] - 'JSESSIONID='
+	protected void logout() {
+		post '/logout'
 	}
 }
-

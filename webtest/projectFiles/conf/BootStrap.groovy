@@ -5,7 +5,6 @@ import com.burtbeckwith.appinfo_test.UserRole
 class BootStrap {
 
 	def sessionFactory
-	def springSecurityService
 
 	def init = { servletContext ->
 		sessionFactory.statistics.statisticsEnabled = true
@@ -28,7 +27,7 @@ class BootStrap {
 		roles.each { Role.get(it.id) }
 
 		// also create a user to test authentication
-		def admin = new User(username: 'admin', password: springSecurityService.encodePassword('password'), enabled: true).save()
+		def admin = new User(username: 'admin', password: 'password').save()
 		UserRole.create admin, adminRole, true
 	}
 }
