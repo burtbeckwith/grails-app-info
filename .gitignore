@@ -1,9 +1,11 @@
-*.zip
-/plugin.xml
 *.log
-target
+/target
+/docs
+grails-app-info-*.zip
+grails-app-info-*.zip.sha1
+plugin.xml
 .settings
 web-app/META-INF
 web-app/WEB-INF
-/docs
-testapps.config.groovy
+bean_tree/
+log_view/

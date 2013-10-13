@@ -1,5 +1,9 @@
 package grails.plugins.appinfo
 
+import grails.web.Action
+
+import java.lang.reflect.Method
+
 import org.apache.commons.lang.time.DurationFormatUtils
 import org.springframework.beans.BeanWrapper
 import org.springframework.beans.PropertyAccessorFactory
@@ -35,20 +39,11 @@ class ScopesInfoService {
 			if (controller.clazz.name == DynamicDelegateController.name) {
 				continue
 			}
-			def controllerInfo = [:]
-			controllerInfo.controller = controller.logicalPropertyName
-			controllerInfo.controllerName = controller.fullName
-			List actions = []
-			BeanWrapper beanWrapper = PropertyAccessorFactory.forBeanPropertyAccess(controller.newInstance())
-			for (pd in beanWrapper.propertyDescriptors) {
-				String closureClassName = controller.getPropertyOrStaticPropertyOrFieldValue(pd.name, Closure)?.class?.name
-				if (closureClassName) {
-					actions << pd.name
-				}
-			}
+			List<String> actions = controller.clazz.methods.findAll({ Method m -> m.getAnnotation(Action) })*.name
 			actions.addAll DynamicControllerManager.getDynamicActions(controller.clazz.name)
-			controllerInfo.actions = actions.sort()
-			data << controllerInfo
+			data << [controller: controller.logicalPropertyName,
+			         controllerName: controller.fullName,
+			         actions: actions.sort()]
 		}
 		data
 	}

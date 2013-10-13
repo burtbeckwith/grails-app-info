@@ -4,12 +4,7 @@
 </head>
 
 <body>
-<g:if test="${request.secure}">
-    <script type='text/javascript' src='https://www.google.com/jsapi'></script>
-</g:if>
-<g:else>
-    <script type='text/javascript' src='http://www.google.com/jsapi'></script>
-</g:else>
+<script type='text/javascript' src='${request.scheme}://www.google.com/jsapi'></script>
 <script>
 google.load('visualization', '1', {'packages':['columnchart']});
 </script>
