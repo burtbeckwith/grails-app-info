@@ -94,8 +94,6 @@ runtime ":app-info:$pluginVersion"
 }
 
 private void copySampleFiles() {
-//	-rw-r--r-- 1 burt burt 1010 Oct 13 14:03 BootStrap.groovy
-//	-rw-r--r-- 1 burt burt  441 Jun 26  2010 UrlMappings.groovy
 		
 	ant.mkdir dir: "${testprojectRoot}/src/groovy/com/burtbeckwith/appinfo_test"
 	ant.copy file: "$projectfiles.path/MyUserType.groovy",
@@ -118,13 +116,9 @@ private void copySampleFiles() {
 
 	new File("$testprojectRoot/grails-app/conf/Config.groovy").withWriterAppend { writer ->
 		writer.write '''
-//grails.plugins.springsecurity.controllerAnnotations.staticRules = [
-//   '/adminmanage/**': ['ROLE_ADMIN']
-//]
 
 grails.plugins.dynamicController.mixins = [
 	'com.burtbeckwith.grails.plugins.appinfo.IndexControllerMixin':       'com.burtbeckwith.appinfo_test.AdminManageController',
-	'com.burtbeckwith.grails.plugins.appinfo.HibernateControllerMixin':   'com.burtbeckwith.appinfo_test.AdminManageController',
 	'com.burtbeckwith.grails.plugins.appinfo.Log4jControllerMixin':       'com.burtbeckwith.appinfo_test.AdminManageController',
 	'com.burtbeckwith.grails.plugins.appinfo.SpringControllerMixin':      'com.burtbeckwith.appinfo_test.AdminManageController',
 	'com.burtbeckwith.grails.plugins.appinfo.MemoryControllerMixin':      'com.burtbeckwith.appinfo_test.AdminManageController',

@@ -24,18 +24,18 @@ public class ContextListener implements ServletContextListener, HttpSessionListe
 
 	private static final String START_TIME = "grails.plugins.appinfo.start_time";
 
-	private static ContextListener _instance;
+	private static ContextListener instance;
 
-	private final Logger _log = Logger.getLogger(getClass());
+	private final Logger log = Logger.getLogger(getClass());
 
-	private final List<HttpSession> _sessions = new LinkedList<HttpSession>();
-	private final Map<String, HttpSession> _sessionsById = new HashMap<String, HttpSession>();
+	private final List<HttpSession> sessions = new LinkedList<HttpSession>();
+	private final Map<String, HttpSession> sessionsById = new HashMap<String, HttpSession>();
 
 	/**
 	 * Constructor, called by the container (singleton).
 	 */
 	public ContextListener() {
-		_instance = this;
+		instance = this;
 	}
 
 	/**
@@ -43,7 +43,7 @@ public class ContextListener implements ServletContextListener, HttpSessionListe
 	 * @return  the instance
 	 */
 	public static ContextListener instance() {
-		return _instance;
+		return instance;
 	}
 
 	/**
@@ -52,7 +52,7 @@ public class ContextListener implements ServletContextListener, HttpSessionListe
 	 * 	javax.servlet.ServletContextEvent)
 	 */
 	public void contextInitialized(final ServletContextEvent event) {
-		_log.debug("app startup");
+		log.debug("app startup");
 		event.getServletContext().setAttribute(START_TIME, new Date());
 	}
 
@@ -62,7 +62,7 @@ public class ContextListener implements ServletContextListener, HttpSessionListe
 	 * 	javax.servlet.ServletContextEvent)
 	 */
 	public void contextDestroyed(final ServletContextEvent event) {
-		_log.debug("app shutdown");
+		log.debug("app shutdown");
 	}
 
 	/**
@@ -73,8 +73,8 @@ public class ContextListener implements ServletContextListener, HttpSessionListe
 	public void sessionCreated(final HttpSessionEvent event) {
 		HttpSession session = event.getSession();
 		synchronized (this) {
-			_sessions.add(session);
-			_sessionsById.put(session.getId(), session);
+			sessions.add(session);
+			sessionsById.put(session.getId(), session);
 		}
 	}
 
@@ -86,8 +86,8 @@ public class ContextListener implements ServletContextListener, HttpSessionListe
 	public void sessionDestroyed(final HttpSessionEvent event) {
 		HttpSession session = event.getSession();
 		synchronized (this) {
-			_sessions.remove(session);
-			_sessionsById.remove(session.getId());
+			sessions.remove(session);
+			sessionsById.remove(session.getId());
 		}
 	}
 
@@ -96,7 +96,7 @@ public class ContextListener implements ServletContextListener, HttpSessionListe
 	 * @return  unmodifiable list of sessions (order by login time)
 	 */
 	public synchronized List<HttpSession> getSessions() {
-		return new ArrayList<HttpSession>(_sessions);
+		return new ArrayList<HttpSession>(sessions);
 	}
 
 	/**
@@ -105,6 +105,6 @@ public class ContextListener implements ServletContextListener, HttpSessionListe
 	 * @return  the session or <code>null</code> if none with that id
 	 */
 	public synchronized HttpSession getSession(final String id) {
-		return _sessionsById.get(id);
+		return sessionsById.get(id);
 	}
 }
