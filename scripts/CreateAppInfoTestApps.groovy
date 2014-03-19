@@ -35,11 +35,6 @@ private void init(String name, config) {
 		error "pluginVersion wasn't specified for config '$name'"
 	}
 
-	def pluginZip = new File(basedir, "grails-app-info-${pluginVersion}.zip")
-	if (!pluginZip.exists()) {
-		error "plugin $pluginZip.absolutePath not found"
-	}
-
 	grailsHome = config.grailsHome
 	if (!new File(grailsHome).exists()) {
 		error "Grails home $grailsHome not found"

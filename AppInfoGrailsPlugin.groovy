@@ -2,7 +2,7 @@ import com.burtbeckwith.grails.plugins.appinfo.ContextListener
 
 class AppInfoGrailsPlugin {
 
-	String version = '1.0.3'
+	String version = '1.1'
 	String grailsVersion = '2.0 > *'
 	List pluginExcludes = [
 		'scripts/CreateAppInfoTestApps.groovy'
@@ -23,7 +23,7 @@ class AppInfoGrailsPlugin {
 		if (useContextListener == null || (useContextListener instanceof Boolean && useContextListener)) {
 			def filterMapping = xml.'filter-mapping'
 			filterMapping[filterMapping.size() - 1] + {
-				'listener' {
+				listener {
 					'listener-class'(ContextListener.name)
 				}
 			}

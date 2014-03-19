@@ -1,4 +1,4 @@
-String version = '1.0.3'
+String version = '1.1'
 String grailsHomeRoot = '/usr/local/javalib'
 String dotGrailsCommon = '/home/burt/.grails'
 String projectDirCommon = '/home/burt/workspace/testapps/app-info-test'
@@ -28,7 +28,7 @@ v22 {
 }
 
 v23 {
-	grailsVersion = '2.3.0'
+	grailsVersion = '2.3.4'
 	pluginVersion = version
 	dotGrails = dotGrailsCommon
 	projectDir = projectDirCommon
