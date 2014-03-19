@@ -9,8 +9,8 @@ modules = {
 			resource url: [dir: 'css', file: name + '.css', plugin: 'appInfo']
 		}
 
-		for (name in ['jquery.positionBy', 'jquery.bgiframe', 'jquery.jdMenu',
-		              'jquery.dataTables.min', 'jquery.tabs.min']) {
+		for (name in ['jquery.dimensions', 'jquery.jdMenu', 'jquery.bgiframe',
+		              'jquery.positionBy', 'jquery.dataTables.min', 'jquery.tabs.min']) {
 			resource url: [dir: 'js/jquery', file: name + '.js', plugin: 'appInfo']
 		}
 	}

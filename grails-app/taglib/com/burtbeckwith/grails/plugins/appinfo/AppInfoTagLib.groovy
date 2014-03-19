@@ -22,7 +22,6 @@ class AppInfoTagLib {
 			              'tabs', 'tabs-accordion', 'appinfo']) {
 				out << """<link rel="stylesheet" media="screen" href="${resource(dir:'css',file:"${name}.css",plugin:'appInfo')}"/>"""
 			}
-			out << """<link rel='stylesheet' media="screen" href='${resource(dir:'css', file: 'main.css', plugin: 'none')}' />"""
 		}
 	}
 
@@ -33,9 +32,9 @@ class AppInfoTagLib {
 			out << r.layoutResources()
 		}
 		else {
-			for (name in ['jquery/jquery.positionBy', 'jquery/jquery.bgiframe', 'jquery/jquery.jdMenu',
-			              'jquery/jquery.dataTables.min', 'jquery/jquery.tabs.min']) {
-				out << g.javascript(src: name + '.js', plugin: 'appInfo')
+			for (name in ['jquery.dimensions', 'jquery.jdMenu', 'jquery.bgiframe',
+			              'jquery.positionBy', 'jquery.dataTables.min', 'jquery.tabs.min']) {
+				out << g.javascript(src: 'jquery/' + name + '.js', plugin: 'appInfo')
 			}
 		}
 	}
