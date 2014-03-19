@@ -11,7 +11,7 @@ grails.project.dependency.resolution = {
 	}
 
 	plugins {
-		compile ':dynamic-controller:0.4'
+		compile ':dynamic-controller:0.5'
 		compile ':google-visualization:0.6.2'
 		compile ':jquery:1.10.2'
 

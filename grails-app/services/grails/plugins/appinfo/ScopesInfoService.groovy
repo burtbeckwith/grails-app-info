@@ -9,7 +9,6 @@ import org.springframework.beans.BeanWrapper
 import org.springframework.beans.PropertyAccessorFactory
 
 import com.burtbeckwith.grails.plugins.appinfo.ContextListener
-import com.burtbeckwith.grails.plugins.dynamiccontroller.DynamicControllerManager
 import com.burtbeckwith.grails.plugins.dynamiccontroller.DynamicDelegateController
 
 /**
@@ -19,6 +18,7 @@ class ScopesInfoService {
 
 	static transactional = false
 
+	def dynamicControllerManager
 	def grailsApplication
 	def servletContext
 
@@ -40,7 +40,7 @@ class ScopesInfoService {
 				continue
 			}
 			List<String> actions = controller.clazz.methods.findAll({ Method m -> m.getAnnotation(Action) })*.name
-			actions.addAll DynamicControllerManager.getDynamicActions(controller.clazz.name)
+			actions.addAll dynamicControllerManager.getDynamicActions(controller.clazz.name)
 			data << [controller: controller.logicalPropertyName,
 			         controllerName: controller.fullName,
 			         actions: actions.sort()]
