@@ -12,8 +12,8 @@ grails.project.dependency.resolution = {
 
 	plugins {
 		compile ':dynamic-controller:0.5.1'
-		compile ':google-visualization:0.6.2'
-		compile ':jquery:1.10.2'
+		compile ':google-visualization:0.7.1'
+		compile ':jquery:1.11.1'
 
 		build ':release:2.2.1', ':rest-client-builder:1.0.3', {
 			export = false
