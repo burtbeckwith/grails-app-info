@@ -1,7 +1,5 @@
 package com.burtbeckwith.grails.plugins.appinfo
 
-import org.codehaus.groovy.grails.plugins.PluginManagerHolder
-
 /**
  * @author <a href='mailto:burt@burtbeckwith.com'>Burt Beckwith</a>
  */
@@ -9,10 +7,10 @@ class AppInfoTagLib {
 
 	static namespace = 'ai'
 
-	def resources = { attrs ->
-		boolean hasResourcesPlugin = PluginManagerHolder.pluginManager.hasGrailsPlugin('resources')
+	def pluginManager
 
-		if (hasResourcesPlugin) {
+	def resources = { attrs ->
+		if (pluginManager.hasGrailsPlugin('resources')) {
 			r.require(module: 'appInfo')
 			out << r.layoutResources()
 		}
@@ -26,9 +24,7 @@ class AppInfoTagLib {
 	}
 
 	def layoutResources = { attrs ->
-		boolean hasResourcesPlugin = PluginManagerHolder.pluginManager.hasGrailsPlugin('resources')
-
-		if (hasResourcesPlugin) {
+		if (pluginManager.hasGrailsPlugin('resources')) {
 			out << r.layoutResources()
 		}
 		else {
