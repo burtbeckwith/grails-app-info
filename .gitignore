@@ -9,3 +9,4 @@ web-app/META-INF
 web-app/WEB-INF
 bean_tree/
 log_view/
+classes/production/grails-app-info-grailsPlugins

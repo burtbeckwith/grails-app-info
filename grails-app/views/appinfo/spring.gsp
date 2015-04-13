@@ -1,16 +1,19 @@
 <head>
 <meta name='layout' content='appinfo' />
 <title>Spring Beans</title>
-
-<g:javascript>
-$(document).ready(function() {
-	<g:each var='entry' in='${beanInfo}'>
-	$('#${entry.key}Table').dataTable( { 'bAutoWidth': false } );
-	</g:each>
-	$('#parentTable').dataTable( { 'bAutoWidth': false } );
-	$('ul.tabs').tabs('div.panes > div')
-});
-</g:javascript>
+	<g:javascript>
+		$(document).ready(function () {
+			<g:each var='entry' in='${beanInfo}'>
+				var dtv = {
+						dataTableName : "#${entry.key}Table",
+						swfPath : "${resource(dir: 'DataTables-1.10.6/extensions/TableTools/swf', file: 'copy_csv_xls_pdf.swf', plugin: 'appInfo')}",
+						pdfMessage : "dev-${entry.key}-${InetAddress.getLocalHost().getHostAddress()}"
+					};
+				initDataTableExportOptions(dtv);
+			</g:each>
+    		$('ul.tabs').tabs('div.panes > div');
+            });
+	</g:javascript>
 
 </head>
 
