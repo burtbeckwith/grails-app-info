@@ -1,4 +1,10 @@
-#!/usr/bin/env bash
-grails clean --stacktrace
-grails compile --stacktrace
-grails publish-plugin --snapshot --stacktrace
+rm -rf target/release
+mkdir target/release
+cd target/release
+git clone git@github.com:burtbeckwith/grails-app-info.git
+cd grails-app-info
+grails clean
+grails compile
+
+#grails publish-plugin --snapshot --stacktrace
+grails publish-plugin --stacktrace
