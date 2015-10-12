@@ -2,13 +2,13 @@ import com.burtbeckwith.grails.plugins.appinfo.ContextListener
 
 class AppInfoGrailsPlugin {
 
-	String version = '1.1.2'
+	String version = '1.1.3-CP-SNAPSHOT'
 	String grailsVersion = '2.0 > *'
 	List pluginExcludes = [
 		'scripts/CreateAppInfoTestApps.groovy'
 	]
 
-	String author = 'Burt Beckwith'
+	String author = 'Alex Staveley (original Burt Beckwith)'
 	String authorEmail = 'burt@burtbeckwith.com'
 	String title = 'Application Info'
 	String description = "UI for inspecting various aspects of the application's configuration"

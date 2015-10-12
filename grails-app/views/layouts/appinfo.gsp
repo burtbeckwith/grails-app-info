@@ -20,7 +20,7 @@
 	<div>
 
 	<div id="left">
-
+        <a href='${request.contextPath}/${grailsApplication.config.appinfo.home.page}' class="accessible">Home</a>
 		<ul class="jd_menu jd_menu_slate">
 			<li><a class="accessible">Attributes</a>
 				<ul>
