@@ -8,7 +8,7 @@ class AppInfoGrailsPlugin {
 		'scripts/CreateAppInfoTestApps.groovy'
 	]
 
-	String author = 'Alex Staveley (original Burt Beckwith)'
+	String author = 'Burt Beckwith'
 	String authorEmail = 'burt@burtbeckwith.com'
 	String title = 'Application Info'
 	String description = "UI for inspecting various aspects of the application's configuration"
