@@ -8,7 +8,7 @@ $(document).ready(function() {
 <%
 for (name in ['spring', 'hibernate', 'codec', 'controller', 'controllerMixin',
               'domain', 'filters', 'service', 'taglib', 'grails', 'groovy', 'misc']) {
-	out << "\t\$('#$name').dataTable( { 'bAutoWidth': false } );\n"
+	//out << "\t\$('#$name').dataTable( { 'bAutoWidth': false } );\n"
 }
 %>
    $("#accordion").tabs("#accordion div.pane", {tabs: 'h2', effect: 'default', initialIndex: null});
